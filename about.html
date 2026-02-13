@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Ceylon | Gem Cabinet</title>
+    <meta name="description"
+        content="Discover the rich history of Sri Lankan gem mining and our commitment to ethical sourcing.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gem: {
+                            dark: '#0f172a', // Slate 900
+                            darker: '#020617', // Slate 950
+                            gold: '#d4af37', // Metallic Gold
+                            goldHover: '#b8962e',
+                            accent: '#1e293b', // Slate 800
+                        },
+                        fontFamily: {
+                            serif: ['"Playfair Display"', 'serif'],
+                            sans: ['Inter', 'sans-serif'],
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar for dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* Gold text gradient effect for some headlines */
+        .text-gradient-gold {
+            background: linear-gradient(to right, #fcd34d, #d4af37, #f59e0b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="bg-gem-darker text-gray-200 font-sans antialiased selection:bg-gem-gold selection:text-gem-darker">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 left-0 bg-gem-dark/95 backdrop-blur-md border-b border-gem-accent transition-all duration-300"
+        id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20 lg:h-24">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="index.html" class="flex flex-col items-start group">
+                        <span
+                            class="font-serif text-2xl lg:text-3xl font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-gem-gold via-yellow-200 to-gem-gold filter drop-shadow-sm">
+                            GEM CABINET
+                        </span>
+                        <span
+                            class="text-[0.6rem] text-gray-400 uppercase tracking-[0.3em] font-sans group-hover:text-white transition-colors">
+                            from the mines of gemcity
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html"
+                            class="text-gray-300 hover:text-gem-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="inventory.html"
+                            class="text-gray-300 hover:text-gem-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Inventory</a>
+                        <a href="about.html"
+                            class="text-white border-b-2 border-gem-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">About
+                            Ceylon</a>
+                        <a href="contact.html"
+                            class="bg-gem-gold text-gem-darker hover:bg-white hover:text-gem-darker px-5 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105 shadow-lg shadow-gem-gold/20">Contact</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gem-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                        aria-controls="mobile-menu" aria-expanded="false"
+                        onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="hidden md:hidden bg-gem-dark border-t border-gem-accent" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="inventory.html"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inventory</a>
+                <a href="about.html" class="text-white font-bold block px-3 py-2 rounded-md text-base font-medium">About
+                    Ceylon</a>
+                <a href="contact.html"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Section -->
+    <!-- Added pt-32 to account for fixed navbar -->
+    <section id="about" class="pt-32 pb-20 bg-gem-dark relative min-h-screen border-t border-gem-accent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-12 mt-8">
+                <div class="lg:w-1/2">
+                    <!-- Reliable Wikimedia Commons Image (Rough Garnet) -->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Raw_garnet.jpg"
+                        alt="Sri Lankan Gem Mining"
+                        class="rounded-none shadow-2xl border border-gray-700 grayscale hover:grayscale-0 transition-all duration-700 w-full object-cover h-96">
+                </div>
+                <div class="lg:w-1/2">
+                    <h2 class="text-4xl font-serif font-bold text-white mb-6">The Legacy of Ceylon</h2>
+                    <p class="text-gray-400 mb-6 leading-relaxed text-lg">
+                        For centuries, the island of Sri Lanka (formerly Ceylon) has been renowned as the "Island of
+                        Gems." From the legendary blue sapphires adorning royal crowns to vibrant spinels, our land
+                        yields treasures unlike any other.
+                    </p>
+                    <p class="text-gray-400 mb-8 leading-relaxed text-lg">
+                        At <span class="text-gem-gold font-bold">Gem Cabinet</span>, we bridge the gap between
+                        traditional artisanal miners in Ratnapura and the modern lapidary artist. We specialize in
+                        selecting high-potential rough stones that promise exceptional brilliance once cut. No
+                        treatments, no heat—just pure, geological history.
+                    </p>
+                    <a href="contact.html"
+                        class="inline-block text-gem-gold font-medium hover:text-white border-b border-gem-gold hover:border-white pb-1 transition-colors text-lg">
+                        Get in Touch with Us &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-8 border-t border-gem-accent">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-600 text-sm">
+            <p>&copy; 2024 Gem Cabinet. Sri Lanka. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript - No logic needed for this page, just layout -->
+</body>
+
+</html>
