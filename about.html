@@ -95,11 +95,28 @@
                             class="text-gray-300 hover:text-gem-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
                         <a href="inventory.html"
                             class="text-gray-300 hover:text-gem-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Inventory</a>
+                        <a href="feedback.html"
+                            class="text-gray-300 hover:text-gem-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Feedback</a>
+                        <a href="track.html"
+                            class="text-gray-300 hover:text-gem-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Track
+                            Order</a>
                         <a href="about.html"
                             class="text-white border-b-2 border-gem-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">About
                             Ceylon</a>
                         <a href="contact.html"
                             class="bg-gem-gold text-gem-darker hover:bg-white hover:text-gem-darker px-5 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105 shadow-lg shadow-gem-gold/20">Contact</a>
+
+                        <!-- Cart Icon -->
+                        <button onclick="window.location.href='inventory.html?openCart=true'"
+                            class="relative p-2 text-gray-400 hover:text-gem-gold transition-colors focus:outline-none group/cart">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
+                            <span
+                                class="cart-count absolute -top-1 -right-1 bg-gem-gold text-gem-darker text-[10px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
+                        </button>
                     </div>
                 </div>
 
@@ -127,8 +144,13 @@
                     class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
                 <a href="inventory.html"
                     class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inventory</a>
-                <a href="about.html" class="text-white font-bold block px-3 py-2 rounded-md text-base font-medium">About
-                    Ceylon</a>
+                <a href="track.html"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Track
+                    Order</a>
+                <a href="feedback.html"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Feedback</a>
+                <a href="about.html"
+                    class="text-white font-bold block px-3 py-2 rounded-md text-base font-medium">About</a>
                 <a href="contact.html"
                     class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
             </div>
@@ -141,9 +163,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col lg:flex-row items-center gap-12 mt-8">
                 <div class="lg:w-1/2">
-                    <!-- Reliable Wikimedia Commons Image (Rough Garnet) -->
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Raw_garnet.jpg"
-                        alt="Sri Lankan Gem Mining"
+                    <!-- Reliable Local Image -->
+                    <img src="Bottom Image1.png" alt="Sri Lankan Gem Mining"
                         class="rounded-none shadow-2xl border border-gray-700 grayscale hover:grayscale-0 transition-all duration-700 w-full object-cover h-96">
                 </div>
                 <div class="lg:w-1/2">
@@ -176,6 +197,9 @@
     </footer>
 
     <!-- JavaScript - No logic needed for this page, just layout -->
+    <!-- Scripts -->
+    <script src="js/gems.js"></script>
+    <script src="js/cart.js"></script>
 </body>
 
 </html>

@@ -78,7 +78,18 @@
             </div>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Tabs -->
+        <div class="flex gap-4 mb-6 border-b border-gray-800">
+            <button onclick="switchTab('gems')" id="tab-gems"
+                class="px-6 py-2 border-b-2 border-gem-gold text-white font-medium">Manage Gems</button>
+            <button onclick="switchTab('feedback')" id="tab-feedback"
+                class="px-6 py-2 text-gray-400 hover:text-white transition-colors">Manage Feedback</button>
+            <button onclick="switchTab('orders')" id="tab-orders"
+                class="px-6 py-2 text-gray-400 hover:text-white transition-colors">Manage Orders</button>
+        </div>
+
+        <!-- Section: Gems -->
+        <div id="section-gems" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Form Section -->
             <div class="lg:col-span-1">
                 <div class="bg-gem-dark p-6 rounded-lg border border-gem-accent sticky top-6">
@@ -129,8 +140,12 @@
                                 <label class="block text-gray-400 text-sm mb-1">Image Filename / URL</label>
                                 <input type="text" id="gem-image" required placeholder="e.g., blue-sapphire.jpg"
                                     class="w-full bg-gem-accent border border-gray-700 rounded p-2 text-white focus:border-gem-gold outline-none">
-                                <p class="text-xs text-gray-500 mt-1">Make sure the file is uploaded to the root folder.
-                                </p>
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-400 text-sm mb-1">Starting Likes</label>
+                                <input type="number" id="gem-likes" required value="0"
+                                    class="w-full bg-gem-accent border border-gray-700 rounded p-2 text-white focus:border-gem-gold outline-none">
                             </div>
 
                             <button type="submit" id="submit-btn"
@@ -155,6 +170,7 @@
                                 <th class="p-4">Image</th>
                                 <th class="p-4">Details</th>
                                 <th class="p-4">Price</th>
+                                <th class="p-4">Likes</th>
                                 <th class="p-4 text-right">Actions</th>
                             </tr>
                         </thead>
@@ -165,6 +181,105 @@
                 </div>
             </div>
         </div>
+
+        <!-- Section: Feedback -->
+        <div id="section-feedback" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-1">
+                <div class="bg-gem-dark p-6 rounded-lg border border-gem-accent sticky top-6">
+                    <h2 class="text-xl text-white mb-4">Add Feedback</h2>
+                    <form id="feedback-admin-form" onsubmit="handleFeedbackSubmit(event)">
+                        <div class="grid gap-4">
+                            <div>
+                                <label class="block text-gray-400 text-sm mb-1">Name</label>
+                                <input type="text" id="fb-admin-name" required
+                                    class="w-full bg-gem-accent border border-gray-700 rounded p-2 text-white focus:border-gem-gold outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 text-sm mb-1">Rating (1-5)</label>
+                                <input type="number" id="fb-admin-rating" min="1" max="5" value="5" required
+                                    class="w-full bg-gem-accent border border-gray-700 rounded p-2 text-white focus:border-gem-gold outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 text-sm mb-1">Date</label>
+                                <input type="date" id="fb-admin-date" required
+                                    class="w-full bg-gem-accent border border-gray-700 rounded p-2 text-white focus:border-gem-gold outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 text-sm mb-1">Comment</label>
+                                <textarea id="fb-admin-comment" required rows="4"
+                                    class="w-full bg-gem-accent border border-gray-700 rounded p-2 text-white focus:border-gem-gold outline-none"></textarea>
+                            </div>
+                            <button type="submit"
+                                class="w-full bg-gem-gold text-gem-darker font-bold py-2 rounded hover:bg-yellow-500 transition-colors">
+                                Add Global Feedback
+                            </button>
+                        </div>
+                    </form>
+                    <div class="mt-6 p-4 bg-gray-900 border border-gray-800 rounded text-xs text-gray-400">
+                        <p class="font-bold mb-1">Note:</p>
+                        <p>Approved feedbacks should be exported and pasted into `js/feedback.js` to make them public.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-2">
+                <div class="bg-gem-dark rounded-lg border border-gem-accent overflow-hidden">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-gem-accent text-gray-400 uppercase">
+                            <tr>
+                                <th class="p-4">Customer</th>
+                                <th class="p-4">Message</th>
+                                <th class="p-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="feedback-table-body" class="divide-y divide-gray-800">
+                            <!-- Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Orders -->
+        <div id="section-orders" class="hidden space-y-6">
+            <div class="flex justify-between items-center">
+                <h2 class="text-2xl font-serif text-white">Order Management</h2>
+                <div class="flex gap-4">
+                    <button onclick="exportData()"
+                        class="bg-gem-gold text-gem-darker font-bold py-2 px-6 rounded text-sm hover:bg-yellow-500 transition-colors">
+                        Export orders.js
+                    </button>
+                    <button onclick="downloadExcel()"
+                        class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-6 rounded text-sm transition-colors flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Export to Excel (.csv)
+                    </button>
+                </div>
+            </div>
+            <div class="bg-gem-dark rounded-lg border border-gem-accent overflow-x-auto">
+                <table class="w-full text-left text-sm min-w-[800px]">
+                    <thead class="bg-gem-accent text-gray-400 uppercase">
+                        <tr>
+                            <th class="p-4">Order ID</th>
+                            <th class="p-4">Date</th>
+                            <th class="p-4">Customer</th>
+                            <th class="p-4">Item</th>
+                            <th class="p-4">Amount</th>
+                            <th class="p-4">Status</th>
+                            <th class="p-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="order-table-body" class="divide-y divide-gray-800">
+                        <!-- Orders -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     </div>
 
     <!-- Notification Toast -->
@@ -175,6 +290,8 @@
 
     <!-- Load Data -->
     <script src="js/gems.js"></script>
+    <script src="js/feedback.js"></script>
+    <script src="js/orders.js"></script>
 
     <script>
         // --- Admin Logic ---
@@ -182,8 +299,7 @@
         // 1. Authentication
         function checkLogin() {
             const pass = document.getElementById('password-input').value;
-            // Simple client-side check. CHANGE THIS if you want real security (requires backend).
-            if (pass === 'gemadmin123') {
+            if (pass === '1234') {
                 document.getElementById('login-overlay').classList.add('hidden');
                 document.getElementById('dashboard').classList.remove('hidden');
                 initDashboard();
@@ -192,41 +308,56 @@
             }
         }
 
-        // Allow 'Enter' key to login
         document.getElementById('password-input').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') checkLogin();
         });
 
-        // 2. State Management
+        // 2. State & Tab Management
         let inventory = [];
+        let feedbackList = [];
+        let currentTab = 'gems';
 
-        function initDashboard() {
-            // Load gems from the imported file (global 'gems' variable)
-            // Clone it to avoid modifying the read-only reference if necessary (though simple arrays are mutable)
-            inventory = [...gems];
-            renderTable();
+        function switchTab(tab) {
+            currentTab = tab;
+            document.getElementById('section-gems').classList.toggle('hidden', tab !== 'gems');
+            document.getElementById('section-feedback').classList.toggle('hidden', tab !== 'feedback');
+
+            document.getElementById('tab-gems').classList.toggle('border-b-2', tab === 'gems');
+            document.getElementById('tab-gems').classList.toggle('border-gem-gold', tab === 'gems');
+            document.getElementById('tab-gems').classList.toggle('text-white', tab === 'gems');
+            document.getElementById('tab-gems').classList.toggle('text-gray-400', tab !== 'gems');
+
+            document.getElementById('tab-feedback').classList.toggle('border-b-2', tab === 'feedback');
+            document.getElementById('tab-feedback').classList.toggle('border-gem-gold', tab === 'feedback');
+            document.getElementById('tab-feedback').classList.toggle('text-white', tab === 'feedback');
+            document.getElementById('tab-feedback').classList.toggle('text-gray-400', tab !== 'feedback');
+
+            if (tab === 'gems') renderTable();
+            else renderFeedbackTable();
         }
 
-        // 3. Render Table
+        function initDashboard() {
+            inventory = [...gems];
+            feedbackList = [...feedbacks];
+            renderTable();
+            renderFeedbackTable();
+
+            // Set today's date in feedback form
+            document.getElementById('fb-admin-date').value = new Date().toISOString().split('T')[0];
+        }
+
+        // 3. Render Table (Gems)
         function renderTable() {
             const tbody = document.getElementById('gem-table-body');
             tbody.innerHTML = '';
-
             inventory.forEach(gem => {
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-gem-accent/50 transition-colors';
-
                 tr.innerHTML = `
-                    <td class="p-4">
-                        <img src="${gem.image}" alt="${gem.name}" class="h-12 w-12 object-cover rounded bg-gray-800">
-                    </td>
-                    <td class="p-4">
-                        <div class="font-bold text-white">${gem.name}</div>
-                        <div class="text-gray-400 text-xs">${gem.weight} ct | ${gem.type}</div>
-                    </td>
-                    <td class="p-4 text-gem-gold font-bold">
-                        $${gem.price.toLocaleString()}
-                    </td>
+                    <td class="p-4"><img src="${gem.image}" class="h-12 w-12 object-cover rounded bg-gray-800"></td>
+                    <td class="p-4"><div class="font-bold text-white">${gem.name}</div><div class="text-gray-400 text-xs">${gem.weight} ct | ${gem.type}</div></td>
+                    <td class="p-4 text-gem-gold font-bold">$${gem.price.toLocaleString()}</td>
+                    <td class="p-4 text-gray-400">${gem.likes || 0}</td>
                     <td class="p-4 text-right space-x-2">
                         <button onclick="editGem(${gem.id})" class="text-blue-400 hover:text-blue-300">Edit</button>
                         <button onclick="deleteGem(${gem.id})" class="text-red-400 hover:text-red-300">Delete</button>
@@ -236,43 +367,102 @@
             });
         }
 
-        // 4. Form Handling
+        // 4. Render Table (Feedback)
+        function renderFeedbackTable() {
+            const tbody = document.getElementById('feedback-table-body');
+            tbody.innerHTML = '';
+            feedbackList.forEach(fb => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-gem-accent/50 transition-colors';
+                tr.innerHTML = `
+                    <td class="p-4">
+                        <div class="font-bold text-white">${fb.name}</div>
+                        <div class="text-gem-gold text-xs">${'★'.repeat(fb.rating)}</div>
+                        <div class="text-gray-500 text-[10px] uppercase">${fb.date}</div>
+                    </td>
+                    <td class="p-4 text-gray-400 text-xs italic line-clamp-2 max-w-xs">"${fb.comment}"</td>
+                    <td class="p-4 text-right">
+                        <button onclick="deleteFeedback(${fb.id})" class="text-red-400 hover:text-red-300 text-xs">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 5. Render Table (Orders)
+        function renderOrderTable() {
+            const tbody = document.getElementById('order-table-body');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            orderList.forEach(order => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-gem-accent/50 transition-colors';
+                tr.innerHTML = `
+                    <td class="p-4 font-mono text-gem-gold">${order.id}</td>
+                    <td class="p-4 text-gray-500">${order.date}</td>
+                    <td class="p-4"><div class="text-white font-bold">${order.customerName}</div><div class="text-[10px] text-gray-500">${order.email}</div></td>
+                    <td class="p-4 text-gray-300">${order.gemName}</td>
+                    <td class="p-4 font-bold text-white">$${order.amount.toLocaleString()}</td>
+                    <td class="p-4">
+                        <select onchange="updateOrderStatus('${order.id}', this.value)" class="bg-gem-dark border border-gray-700 text-xs p-1 rounded text-gray-300 outline-none focus:border-gem-gold">
+                            <option value="Payment Received" ${order.status === 'Payment Received' ? 'selected' : ''}>Payment Received</option>
+                            <option value="Getting Ready" ${order.status === 'Getting Ready' ? 'selected' : ''}>Getting Ready</option>
+                            <option value="Dispatched to Mail" ${order.status === 'Dispatched to Mail' ? 'selected' : ''}>Dispatched to Mail</option>
+                            <option value="Delivered" ${order.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                        </select>
+                    </td>
+                    <td class="p-4 text-right">
+                        <button onclick="deleteOrder('${order.id}')" class="text-red-400 hover:text-red-300 text-xs">Cancel</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateOrderStatus(id, newStatus) {
+            const order = orderList.find(o => o.id === id);
+            if (order) {
+                order.status = newStatus;
+                showToast('Order Status Updated');
+            }
+        }
+
+        function deleteOrder(id) {
+            if (confirm('Cancel this order?')) {
+                orderList = orderList.filter(o => o.id !== id);
+                renderOrderTable();
+                showToast('Order Removed');
+            }
+        }
+
+        // 5. Gem Handlers
         function handleFormSubmit(e) {
             e.preventDefault();
-
             const idInput = document.getElementById('gem-id').value;
             const isEdit = idInput !== '';
-
             const newGem = {
-                id: isEdit ? parseInt(idInput) : Date.now(), // Generate rough ID for new items
+                id: isEdit ? parseInt(idInput) : Date.now(),
                 name: document.getElementById('gem-name').value,
                 type: document.getElementById('gem-type').value,
                 weight: parseFloat(document.getElementById('gem-weight').value),
                 color: document.getElementById('gem-color').value,
                 origin: document.getElementById('gem-origin').value,
                 price: parseFloat(document.getElementById('gem-price').value),
-                image: document.getElementById('gem-image').value
+                image: document.getElementById('gem-image').value,
+                likes: parseInt(document.getElementById('gem-likes').value) || 0
             };
-
             if (isEdit) {
                 const index = inventory.findIndex(g => g.id === parseInt(idInput));
-                if (index !== -1) {
-                    inventory[index] = newGem;
-                    showToast('Gem Updated Successfully');
-                }
-            } else {
-                inventory.push(newGem);
-                showToast('New Gem Added');
-            }
-
+                if (index !== -1) inventory[index] = newGem;
+            } else inventory.push(newGem);
             renderTable();
             resetForm();
+            showToast('Gem Inventory Updated');
         }
 
         function editGem(id) {
             const gem = inventory.find(g => g.id === id);
             if (!gem) return;
-
             document.getElementById('gem-id').value = gem.id;
             document.getElementById('gem-name').value = gem.name;
             document.getElementById('gem-type').value = gem.type;
@@ -281,14 +471,14 @@
             document.getElementById('gem-origin').value = gem.origin || '';
             document.getElementById('gem-price').value = gem.price;
             document.getElementById('gem-image').value = gem.image;
-
+            document.getElementById('gem-likes').value = gem.likes || 0;
             document.getElementById('form-title').textContent = 'Edit Gem';
             document.getElementById('submit-btn').textContent = 'Update Gem';
             document.getElementById('cancel-btn').classList.remove('hidden');
         }
 
         function deleteGem(id) {
-            if (confirm('Are you sure you want to delete this gem?')) {
+            if (confirm('Delete this gem?')) {
                 inventory = inventory.filter(g => g.id !== id);
                 renderTable();
                 showToast('Gem Deleted');
@@ -303,22 +493,74 @@
             document.getElementById('cancel-btn').classList.add('hidden');
         }
 
-        // 5. Export Logic
-        function exportData() {
-            // Convert inventory array to formatted JSON-like string
-            // We use JSON.stringify but then adjust it to look like a variable declaration
-            const json = JSON.stringify(inventory, null, 4);
-            const jsCode = `// Master Gemstone Data\nconst gems = ${json};\n`;
+        // 6. Feedback Handlers
+        function handleFeedbackSubmit(e) {
+            e.preventDefault();
+            const newFb = {
+                id: Date.now(),
+                name: document.getElementById('fb-admin-name').value,
+                rating: parseInt(document.getElementById('fb-admin-rating').value),
+                date: document.getElementById('fb-admin-date').value,
+                comment: document.getElementById('fb-admin-comment').value
+            };
+            feedbackList.push(newFb);
+            renderFeedbackTable();
+            document.getElementById('feedback-admin-form').reset();
+            document.getElementById('fb-admin-date').value = new Date().toISOString().split('T')[0];
+            showToast('Global Feedback Added');
+        }
 
-            // Copy to clipboard
-            navigator.clipboard.writeText(jsCode).then(() => {
-                showToast('Code Copied to Clipboard!');
-                alert('Code copied! Now paste it into js/gems.js replacing the old content.');
+        function deleteFeedback(id) {
+            if (confirm('Delete this feedback?')) {
+                feedbackList = feedbackList.filter(f => f.id !== id);
+                renderFeedbackTable();
+                showToast('Feedback Deleted');
+            }
+        }
+
+        // 9. Export Logic
+        function exportData() {
+            if (currentTab === 'gems') {
+                const jsCode = `// Master Gemstone Data\nconst gems = ${JSON.stringify(inventory, null, 4)};\n`;
+                copyContent(jsCode, 'js/gems.js');
+            } else if (currentTab === 'feedback') {
+                const jsCode = `// Master Feedback Data\nconst feedbacks = ${JSON.stringify(feedbackList, null, 4)};\n`;
+                copyContent(jsCode, 'js/feedback.js');
+            } else {
+                const jsCode = `// Master Orders Data\nconst orders = ${JSON.stringify(orderList, null, 4)};\n`;
+                copyContent(jsCode, 'js/orders.js');
+            }
+        }
+
+        function copyContent(code, fileName) {
+            navigator.clipboard.writeText(code).then(() => {
+                showToast('Code Copied!');
+                alert(`Code for ${fileName} copied! paste it into the file.`);
             }).catch(err => {
-                console.error('Failed to copy: ', err);
-                alert('Failed to copy automatically. Please copy the code manually from console.');
-                console.log(jsCode);
+                console.error('Failed to copy', err);
+                console.log(code);
             });
+        }
+
+        function downloadExcel() {
+            // CSV Header
+            let csv = 'Order ID,Date,Customer Name,Email,Gem Name,Amount,Status\n';
+
+            // CSV Rows
+            orderList.forEach(o => {
+                csv += `"${o.id}","${o.date}","${o.customerName}","${o.email}","${o.gemName}","${o.amount}","${o.status}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('hidden', '');
+            a.setAttribute('href', url);
+            a.setAttribute('download', `GemCabinet_Orders_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showToast('Excel/CSV Generated');
         }
 
         function showToast(msg) {

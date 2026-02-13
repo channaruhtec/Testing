@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Feedbacks - Gem Cabinet</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gem-dark': '#0f172a',
+                        'gem-darker': '#020617',
+                        'gem-gold': '#d4af37',
+                        'gem-accent': '#1e293b',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="bg-gem-darker text-gray-200 font-sans antialiased selection:bg-gem-gold selection:text-gem-darker">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 left-0 bg-gem-dark/95 backdrop-blur-md border-b border-gem-accent transition-all duration-300"
+        id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center py-4 lg:flex-row lg:justify-between lg:h-24">
+                <div class="flex flex-col items-center lg:items-start mb-4 lg:mb-0">
+                    <span
+                        class="text-2xl lg:text-3xl font-serif font-bold tracking-[0.2em] text-white leading-tight">GEM
+                        CABINET</span>
+                    <span
+                        class="text-[8px] lg:text-[10px] uppercase tracking-[0.4em] text-gem-gold font-medium mt-1">from
+                        the mines of gemcity</span>
+                </div>
+                <div
+                    class="flex items-center space-x-6 lg:space-x-10 text-[10px] lg:text-xs uppercase tracking-[0.2em] font-medium">
+                    <a href="index.html" class="text-gray-400 hover:text-gem-gold transition-colors">Home</a>
+                    <a href="inventory.html" class="text-gray-400 hover:text-gem-gold transition-colors">Inventory</a>
+                    <a href="feedback.html" class="text-gem-gold">Feedback</a>
+                    <a href="track.html" class="text-gray-400 hover:text-gem-gold transition-colors">Track Order</a>
+                    <a href="about.html" class="text-gray-400 hover:text-gem-gold transition-colors">About</a>
+                    <a href="contact.html" class="text-gray-400 hover:text-gem-gold transition-colors">Contact</a>
+
+                    <!-- Cart Icon -->
+                    <button onclick="window.location.href='inventory.html?openCart=true'"
+                        class="relative p-2 text-gray-400 hover:text-gem-gold transition-colors focus:outline-none group/cart">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg>
+                        <span
+                            class="cart-count absolute -top-1 -right-1 bg-gem-gold text-gem-darker text-[10px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="pt-40 pb-20 bg-gem-dark relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div
+                class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gem-gold via-transparent to-transparent">
+            </div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 text-center">
+            <h1 class="text-5xl lg:text-6xl font-serif font-bold text-white mb-6">Customer Feedbacks</h1>
+            <div class="w-32 h-1 bg-gem-gold mx-auto mb-8"></div>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed font-light">
+                Discover what our valued clients have to say about their experiences with Gem Cabinet.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-20 bg-gem-darker min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+
+                <!-- Feedback List -->
+                <div class="lg:col-span-2 space-y-8">
+                    <h2 class="text-2xl font-serif text-white mb-8 border-b border-gem-accent pb-4">Recent Experiences
+                    </h2>
+                    <div id="feedback-container" class="space-y-6">
+                        <!-- Feedbacks injected here -->
+                    </div>
+                </div>
+
+                <!-- Submission Form -->
+                <div class="lg:col-span-1">
+                    <div class="bg-gem-dark p-8 rounded-sm border border-gem-accent sticky top-32">
+                        <h2 class="text-2xl font-serif text-white mb-6">Share Your Experience</h2>
+                        <form id="feedback-form" class="space-y-4">
+                            <div>
+                                <label class="block text-gray-400 text-xs uppercase tracking-widest mb-1">Your
+                                    Name</label>
+                                <input type="text" id="fb-name" required
+                                    class="w-full bg-gem-accent border border-gray-700 rounded-sm p-3 text-white focus:outline-none focus:border-gem-gold transition-colors placeholder:text-gray-600"
+                                    placeholder="Enter your name">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 text-xs uppercase tracking-widest mb-1">Rating</label>
+                                <div class="flex gap-2 text-2xl" id="star-rating">
+                                    <button type="button"
+                                        class="star text-gray-600 hover:text-gem-gold transition-colors"
+                                        data-value="1">★</button>
+                                    <button type="button"
+                                        class="star text-gray-600 hover:text-gem-gold transition-colors"
+                                        data-value="2">★</button>
+                                    <button type="button"
+                                        class="star text-gray-600 hover:text-gem-gold transition-colors"
+                                        data-value="3">★</button>
+                                    <button type="button"
+                                        class="star text-gray-600 hover:text-gem-gold transition-colors"
+                                        data-value="4">★</button>
+                                    <button type="button"
+                                        class="star text-gray-600 hover:text-gem-gold transition-colors"
+                                        data-value="5">★</button>
+                                </div>
+                                <input type="hidden" id="fb-rating" value="5">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 text-xs uppercase tracking-widest mb-1">Your
+                                    Message</label>
+                                <textarea id="fb-comment" required rows="4"
+                                    class="w-full bg-gem-accent border border-gray-700 rounded-sm p-3 text-white focus:outline-none focus:border-gem-gold transition-colors placeholder:text-gray-600"
+                                    placeholder="Tell us about your purchase..."></textarea>
+                            </div>
+                            <button type="submit"
+                                class="w-full bg-gem-gold text-gem-darker font-bold py-4 rounded-sm hover:bg-yellow-500 transition-all duration-300 uppercase tracking-widest text-xs">
+                                Submit Feedback
+                            </button>
+                            <p class="text-[10px] text-gray-500 text-center leading-relaxed">
+                                Your feedback will be saved locally and submitted for administrative review before being
+                                published globally.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-16 border-t border-gem-accent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div
+                class="flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0 text-center md:text-left">
+                <div>
+                    <span class="text-xl font-serif font-bold text-white tracking-widest">GEM CABINET</span>
+                    <p class="text-gray-600 text-xs mt-2 uppercase tracking-[0.2em] font-light">From the mines of
+                        gemcity</p>
+                </div>
+                <div class="flex space-x-12 text-[10px] uppercase tracking-[0.3em] font-medium">
+                    <a href="inventory.html"
+                        class="text-gray-400 hover:text-gem-gold transition-colors underline decoration-gem-gold/20 underline-offset-8">Inventory</a>
+                    <a href="about.html"
+                        class="text-gray-400 hover:text-gem-gold transition-colors underline decoration-gem-gold/20 underline-offset-8">Our
+                        Story</a>
+                </div>
+                <div class="text-gray-600 text-[10px] uppercase tracking-widest leading-loose">
+                    &copy; 2024 Gem Cabinet.<br>Sri Lanka.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/feedback.js"></script>
+    <script>
+        // Star Rating Logic
+        const stars = document.querySelectorAll('.star');
+        const ratingInput = document.getElementById('fb-rating');
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const val = star.dataset.value;
+                ratingInput.value = val;
+                updateStars(val);
+            });
+        });
+
+        function updateStars(val) {
+            stars.forEach(s => {
+                if (parseInt(s.dataset.value) <= val) {
+                    s.classList.remove('text-gray-600');
+                    s.classList.add('text-gem-gold');
+                } else {
+                    s.classList.remove('text-gem-gold');
+                    s.classList.add('text-gray-600');
+                }
+            });
+        }
+        updateStars(5); // Default
+
+        // Feedback Logic
+        const container = document.getElementById('feedback-container');
+        const form = document.getElementById('feedback-form');
+
+        function renderFeedback() {
+            container.innerHTML = '';
+
+            // Get local storage feedbacks
+            const localFeedbacks = JSON.parse(localStorage.getItem('pendingFeedbacks') || '[]');
+
+            // Combine with global feedbacks (global first)
+            const allFeedbacks = [...feedbacks, ...localFeedbacks].reverse();
+
+            allFeedbacks.forEach(fb => {
+                const card = document.createElement('div');
+                card.className = 'bg-gem-dark p-8 rounded-sm border border-gem-accent hover:border-gem-gold/30 transition-all duration-500 group';
+
+                let starsHtml = '';
+                for (let i = 1; i <= 5; i++) {
+                    starsHtml += `<span class="${i <= fb.rating ? 'text-gem-gold' : 'text-gray-700'}">★</span>`;
+                }
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-serif text-white group-hover:text-gem-gold transition-colors">${fb.name}</h3>
+                            <div class="flex gap-1 mt-1 text-sm">
+                                ${starsHtml}
+                            </div>
+                        </div>
+                        <span class="text-[10px] text-gray-600 uppercase tracking-widest font-medium">${fb.date}</span>
+                    </div>
+                    <p class="text-gray-400 leading-relaxed font-light italic">
+                        "${fb.comment}"
+                    </p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const newFb = {
+                id: Date.now(),
+                name: document.getElementById('fb-name').value,
+                rating: parseInt(document.getElementById('fb-rating').value),
+                comment: document.getElementById('fb-comment').value,
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            // Save to local storage
+            const pending = JSON.parse(localStorage.getItem('pendingFeedbacks') || '[]');
+            pending.push(newFb);
+            localStorage.setItem('pendingFeedbacks', JSON.stringify(pending));
+
+            // Reset form and re-render
+            form.reset();
+            updateStars(5);
+            renderFeedback();
+
+            alert('Thank you for your feedback! It has been saved locally and sent for review.');
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', renderFeedback);
+    </script>
+</body>
+
+</html>

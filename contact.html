@@ -90,16 +90,27 @@
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="index.html"
-                            class="text-gray-300 hover:text-gem-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                    <div
+                        class="flex items-center space-x-6 lg:space-x-10 text-[10px] lg:text-xs uppercase tracking-[0.2em] font-medium">
+                        <a href="index.html" class="text-gray-400 hover:text-gem-gold transition-colors">Home</a>
                         <a href="inventory.html"
-                            class="text-gray-300 hover:text-gem-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">Inventory</a>
-                        <a href="about.html"
-                            class="text-gray-300 hover:text-gem-gold px-3 py-2 rounded-md text-sm font-medium transition-colors">About
-                            Ceylon</a>
-                        <a href="contact.html"
-                            class="bg-gem-gold text-gem-darker hover:bg-white hover:text-gem-darker px-5 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105 shadow-lg shadow-gem-gold/20">Contact</a>
+                            class="text-gray-400 hover:text-gem-gold transition-colors">Inventory</a>
+                        <a href="feedback.html" class="text-gray-400 hover:text-gem-gold transition-colors">Feedback</a>
+                        <a href="track.html" class="text-gray-400 hover:text-gem-gold transition-colors">Track Order</a>
+                        <a href="about.html" class="text-gray-400 hover:text-gem-gold transition-colors">About</a>
+                        <a href="contact.html" class="text-gem-gold">Contact</a>
+
+                        <!-- Cart Icon -->
+                        <button onclick="window.location.href='inventory.html?openCart=true'"
+                            class="relative p-2 text-gray-400 hover:text-gem-gold transition-colors focus:outline-none group/cart">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
+                            <span
+                                class="cart-count absolute -top-1 -right-1 bg-gem-gold text-gem-darker text-[10px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
+                        </button>
                     </div>
                 </div>
 
@@ -127,9 +138,13 @@
                     class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
                 <a href="inventory.html"
                     class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inventory</a>
+                <a href="track.html"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Track
+                    Order</a>
+                <a href="feedback.html"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Feedback</a>
                 <a href="about.html"
-                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About
-                    Ceylon</a>
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
                 <a href="contact.html"
                     class="text-white font-bold block px-3 py-2 rounded-md text-base font-medium">Contact</a>
             </div>
@@ -188,6 +203,9 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="js/gems.js"></script>
+    <script src="js/cart.js"></script>
 </body>
 
 </html>
