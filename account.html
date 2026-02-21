@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | Gem Cabinet</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .font-serif {
+            font-family: 'Bodoni Moda', serif;
+        }
+
+        .bg-gem-dark {
+            background-color: #030303;
+        }
+
+        .bg-gem-darker {
+            background-color: #000000;
+        }
+
+        .bg-gem-accent {
+            background-color: #0c0c0c;
+        }
+
+        .text-gem-gold {
+            color: #d4af37;
+        }
+
+        .border-gem-gold {
+            border-color: #d4af37;
+        }
+
+        .border-gem-accent {
+            border-color: #1a1a1a;
+        }
+    </style>
+</head>
+
+<body class="bg-gem-darker text-gray-300 min-h-screen">
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-gem-darker/80 backdrop-blur-md border-b border-gem-accent py-4">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="flex flex-col items-start leading-tight">
+                <span class="text-xl font-serif font-bold tracking-[0.2em] text-white">GEM CABINET</span>
+                <span class="text-[7px] uppercase tracking-[0.4em] text-gem-gold font-medium">from the mines of
+                    gemcity</span>
+            </a>
+            <div class="flex items-center gap-8 text-[10px] uppercase tracking-widest font-medium">
+                <a href="inventory.html" class="text-gray-400 hover:text-white transition-colors">Inventory</a>
+                <a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a>
+                <button onclick="signOut()" class="text-red-500/80 hover:text-red-400 transition-colors">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 py-12">
+        <div class="mb-12">
+            <h1 class="text-4xl font-serif text-white mb-2" id="welcome-name">My Collection</h1>
+            <p class="text-gray-500 italic">Manage your orders and track your shipments</p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8">
+            <!-- User Info Card -->
+            <div class="bg-gem-dark border border-gem-accent p-8 relative overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 w-32 h-32 bg-gem-gold/5 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2">
+                </div>
+                <div class="flex flex-col md:flex-row md:items-center gap-8">
+                    <div
+                        class="w-16 h-16 rounded-full bg-gem-gold/20 flex items-center justify-center border border-gem-gold/50">
+                        <span class="text-2xl font-bold text-gem-gold" id="user-initial">...</span>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-serif text-xl" id="display-name">...</h3>
+                        <p class="text-gray-500 text-sm mt-1" id="display-email">...</p>
+                    </div>
+                    <div class="md:ml-auto grid grid-cols-2 gap-8 text-center">
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest text-gray-500 mb-1">Total Orders</p>
+                            <p class="text-2xl font-serif text-gem-gold" id="order-count">0</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest text-gray-500 mb-1">Status</p>
+                            <p class="text-xs uppercase tracking-widest text-green-500/80 font-bold mt-2">Active Buyer
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order History -->
+            <div class="space-y-6">
+                <h2 class="text-xl font-serif text-white flex items-center gap-4">
+                    Order History
+                    <span class="h-px flex-grow bg-gem-accent"></span>
+                </h2>
+
+                <div class="bg-gem-dark border border-gem-accent overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr
+                                    class="border-b border-gem-accent text-[10px] uppercase tracking-widest text-gray-500">
+                                    <th class="px-6 py-4 font-medium">Gemstone</th>
+                                    <th class="px-6 py-4 font-medium">Order ID</th>
+                                    <th class="px-6 py-4 font-medium">Date</th>
+                                    <th class="px-6 py-4 font-medium">Amount</th>
+                                    <th class="px-6 py-4 font-medium text-right">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="order-table-body">
+                                <!-- Orders will be loaded here -->
+                                <tr>
+                                    <td colspan="5" class="px-6 py-12 text-center text-gray-600 italic">
+                                        No gems acquired yet. <a href="inventory.html"
+                                            class="text-gem-gold hover:underline">Explore the inventory</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-12 text-center border-t border-gem-accent bg-gem-darker">
+        <p class="text-[10px] text-gray-700 uppercase tracking-[0.5em] font-medium">&copy; 2024 Gem Cabinet | Ceylon
+            Rough Sourcing</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script>
+        const user = getCurrentUser();
+        if (!user) {
+            window.location.href = 'login.html';
+        }
+
+        function loadDashboard() {
+            document.getElementById('welcome-name').textContent = `My Collection, ${user.name.split(' ')[0]}`;
+            document.getElementById('display-name').textContent = user.name;
+            document.getElementById('display-email').textContent = user.email;
+            document.getElementById('user-initial').textContent = user.name.charAt(0).toUpperCase();
+
+            // Load orders
+            const myOrders = JSON.parse(localStorage.getItem('myOrders') || '[]');
+            // Filter orders for this user by email (matching the email used in checkout)
+            const userOrders = myOrders.filter(o => o.email === user.email);
+
+            document.getElementById('order-count').textContent = userOrders.length;
+
+            const tbody = document.getElementById('order-table-body');
+            if (userOrders.length > 0) {
+                tbody.innerHTML = '';
+
+                // Group by order ID for cleaner view? No, let's keep it per gem but maybe indicate shared IDs
+                userOrders.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(order => {
+                    const tr = document.createElement('tr');
+                    tr.className = 'border-b border-gem-accent hover:bg-gem-accent/20 transition-colors group';
+                    tr.innerHTML = `
+                        <td class="px-6 py-4 font-medium text-white">${order.gemName}</td>
+                        <td class="px-6 py-4">
+                            <a href="track.html?id=${order.id}" class="text-gem-gold font-mono hover:underline">${order.id}</a>
+                        </td>
+                        <td class="px-6 py-4 text-gray-500">${order.date}</td>
+                        <td class="px-6 py-4 text-white font-bold">$${order.amount.toLocaleString()}</td>
+                        <td class="px-6 py-4 text-right">
+                            <span class="px-3 py-1 bg-gem-gold/10 text-gem-gold text-[10px] font-bold rounded-full border border-gem-gold/20">
+                                ${order.status}
+                            </span>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadDashboard);
+    </script>
+</body>
+
+</html>

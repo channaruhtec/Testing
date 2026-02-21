@@ -37,13 +37,27 @@
         id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col items-center py-4 lg:flex-row lg:justify-between lg:h-24">
-                <div class="flex flex-col items-center lg:items-start mb-4 lg:mb-0">
-                    <span
-                        class="text-2xl lg:text-3xl font-serif font-bold tracking-[0.2em] text-white leading-tight">GEM
-                        CABINET</span>
-                    <span
-                        class="text-[8px] lg:text-[10px] uppercase tracking-[0.4em] text-gem-gold font-medium mt-1">from
-                        the mines of gemcity</span>
+                <div class="flex items-center gap-4">
+                    <!-- Mobile Cart Icon -->
+                    <button onclick="window.location.href='inventory.html?openCart=true'"
+                        class="relative p-2 text-gray-400 hover:text-gem-gold transition-colors focus:outline-none md:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg>
+                        <span
+                            class="cart-count absolute -top-1 -right-1 bg-gem-gold text-gem-darker text-[10px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
+                    </button>
+
+                    <div class="flex flex-col items-center lg:items-start">
+                        <span
+                            class="text-2xl lg:text-3xl font-serif font-bold tracking-[0.2em] text-white leading-tight">GEM
+                            CABINET</span>
+                        <span
+                            class="text-[8px] lg:text-[10px] uppercase tracking-[0.4em] text-gem-gold font-medium mt-1">from
+                            the mines of gemcity</span>
+                    </div>
                 </div>
                 <div
                     class="flex items-center space-x-6 lg:space-x-10 text-[10px] lg:text-xs uppercase tracking-[0.2em] font-medium">
@@ -53,6 +67,11 @@
                     <a href="feedback.html" class="text-gray-400 hover:text-gem-gold transition-colors">Feedback</a>
                     <a href="about.html" class="text-gray-400 hover:text-gem-gold transition-colors">About</a>
                     <a href="contact.html" class="text-gray-400 hover:text-gem-gold transition-colors">Contact</a>
+
+                    <!-- Auth Nav -->
+                    <div class="auth-nav flex items-center border-l border-gray-800 pl-6 ml-4">
+                        <a href="login.html" class="text-gray-400 hover:text-gem-gold transition-colors">Sign In</a>
+                    </div>
 
                     <!-- Cart Icon -->
                     <button onclick="window.location.href='inventory.html?openCart=true'"
@@ -108,7 +127,9 @@
                 <!-- Status Screen -->
                 <div id="status-container" class="hidden mt-12 space-y-12">
                     <div class="border-t border-gem-accent pt-8 flex flex-col items-center">
-                        <h2 id="order-gem-name" class="text-2xl font-serif text-gem-gold mb-1">...</h2>
+                        <div id="order-gems-list" class="space-y-2 mb-4 text-center">
+                            <!-- Gem names list -->
+                        </div>
                         <p id="order-date" class="text-gray-500 text-[10px] uppercase tracking-widest">Ordered on ...
                         </p>
                     </div>
@@ -221,23 +242,33 @@
             // Combine global orders and local orders
             const localOrders = JSON.parse(localStorage.getItem('myOrders') || '[]');
             const allOrders = [...orders, ...localOrders];
-            const order = allOrders.find(o => o.id === id);
+            const matchingOrders = allOrders.filter(o => o.id === id);
 
-            if (order) {
-                showOrder(order);
+            if (matchingOrders.length > 0) {
+                showOrder(matchingOrders);
             } else {
                 container.classList.add('hidden');
                 error.classList.remove('hidden');
             }
         });
 
-        function showOrder(order) {
+        function showOrder(matchingOrders) {
+            const first = matchingOrders[0];
             error.classList.add('hidden');
             container.classList.remove('hidden');
-            document.getElementById('order-gem-name').textContent = order.gemName;
-            document.getElementById('order-date').textContent = `Ordered on ${order.date}`;
 
-            updateTimeline(order.status);
+            const list = document.getElementById('order-gems-list');
+            list.innerHTML = '';
+            matchingOrders.forEach(o => {
+                const h2 = document.createElement('h2');
+                h2.className = 'text-2xl font-serif text-gem-gold mb-1';
+                h2.textContent = o.gemName;
+                list.appendChild(h2);
+            });
+
+            document.getElementById('order-date').textContent = `Ordered on ${first.date}`;
+
+            updateTimeline(first.status);
         }
 
         const statuses = ['Payment Received', 'Getting Ready', 'Dispatched to Mail', 'Delivered'];
@@ -275,6 +306,7 @@
         }
     </script>
     <!-- Scripts -->
+    <script src="js/auth.js"></script>
     <script src="js/gems.js"></script>
     <script src="js/orders.js"></script>
     <script src="js/cart.js"></script>

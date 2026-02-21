@@ -96,8 +96,14 @@
                         <a href="inventory.html" class="text-gem-gold">Inventory</a>
                         <a href="track.html" class="text-gray-400 hover:text-gem-gold transition-colors">Track Order</a>
                         <a href="feedback.html" class="text-gray-400 hover:text-gem-gold transition-colors">Feedback</a>
-                        <a href="about.html" class="text-gray-400 hover:text-gem-gold transition-colors">About</a>
-                        <a href="contact.html" class="text-gray-400 hover:text-gem-gold transition-colors">Contact</a>
+                        <a href="contact.html"
+                            class="bg-gem-gold text-gem-darker hover:bg-white hover:text-gem-darker px-5 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105 shadow-lg shadow-gem-gold/20 mr-4">Contact</a>
+
+                        <!-- Auth Nav -->
+                        <div class="auth-nav flex items-center mr-4 border-r border-gray-800 pr-4">
+                            <a href="login.html"
+                                class="text-gray-400 hover:text-gem-gold transition-colors font-medium">Sign In</a>
+                        </div>
 
                         <!-- Cart Icon -->
                         <button onclick="openCart()"
@@ -113,8 +119,20 @@
                     </div>
                 </div>
 
-                <!-- Mobile Menu Button -->
-                <div class="-mr-2 flex md:hidden">
+                <!-- Mobile Menu Button & Cart -->
+                <div class="-mr-2 flex items-center md:hidden gap-2">
+                    <!-- Mobile Cart Icon -->
+                    <button onclick="openCart()"
+                        class="relative p-2 text-gray-400 hover:text-gem-gold transition-colors focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg>
+                        <span
+                            class="cart-count absolute -top-1 -right-1 bg-gem-gold text-gem-darker text-[10px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
+                    </button>
+
                     <button type="button"
                         class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gem-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                         aria-controls="mobile-menu" aria-expanded="false"
@@ -127,6 +145,7 @@
                         </svg>
                     </button>
                 </div>
+
             </div>
         </div>
 
@@ -146,6 +165,9 @@
                     class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
                 <a href="contact.html"
                     class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+
+                <!-- Mobile Auth Nav -->
+                <div id="mobile-auth-nav"></div>
             </div>
     </nav>
 
@@ -163,10 +185,14 @@
 
             <div id="checkout-form-container">
                 <form id="checkout-form" onsubmit="handleCheckout(event)" class="space-y-6">
-                    <div class="text-center mb-8">
+                    <div class="text-center mb-6">
                         <h2 class="text-2xl font-serif text-white mb-2">Secure Checkout</h2>
-                        <p class="text-gray-400 text-sm">Completing purchase for <span id="checkout-gem-name"
-                                class="text-gem-gold font-bold">...</span></p>
+                        <div id="checkout-items-summary"
+                            class="bg-gem-darker border border-gem-accent p-3 rounded-sm space-y-2 max-h-32 overflow-y-auto mb-4 hidden">
+                            <!-- Items listed here -->
+                        </div>
+                        <p id="checkout-single-info" class="text-gray-400 text-sm">Completing purchase for <span
+                                id="checkout-gem-name" class="text-gem-gold font-bold">...</span></p>
                     </div>
 
                     <div class="grid grid-cols-1 gap-4">
@@ -211,6 +237,9 @@
                     </div>
                     <div>
                         <h2 class="text-3xl font-serif text-white mb-2">Order Confirmed!</h2>
+                        <div id="success-items-list" class="text-xs text-gray-500 uppercase tracking-widest mb-4">
+                            <!-- Items listed here -->
+                        </div>
                         <p class="text-gray-400">Thank you for your purchase. Your order ID is:</p>
                         <div class="mt-4 p-3 bg-gem-accent border border-gem-gold/20 text-gem-gold font-mono text-xl tracking-widest"
                             id="order-id-display">
@@ -500,12 +529,25 @@
 
             const nameEl = document.getElementById('checkout-gem-name');
             const priceEl = document.getElementById('checkout-price');
+            const summaryEl = document.getElementById('checkout-items-summary');
+            const singleInfo = document.getElementById('checkout-single-info');
+
+            summaryEl.innerHTML = '';
 
             if (isCartCheckout) {
-                nameEl.textContent = `${cart.length} unique items`;
+                singleInfo.classList.add('hidden');
+                summaryEl.classList.remove('hidden');
+                cart.forEach(gem => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'flex justify-between items-center text-[10px] uppercase tracking-widest text-gray-400';
+                    itemDiv.innerHTML = `<span>${gem.name}</span> <span class="text-gem-gold">$${gem.price.toLocaleString()}</span>`;
+                    summaryEl.appendChild(itemDiv);
+                });
                 priceEl.textContent = `$${getCartTotal().toLocaleString()}`;
             } else {
                 const gem = gems.find(g => g.id === id);
+                singleInfo.classList.remove('hidden');
+                summaryEl.classList.add('hidden');
                 nameEl.textContent = gem.name;
                 priceEl.textContent = `$${gem.price.toLocaleString()}`;
             }
@@ -570,13 +612,30 @@
                     gemName: gem.name,
                     amount: gem.price,
                     date,
-                    status: 'Payment Received'
+                    status: 'Payment Received',
+                    userEmail: (typeof getCurrentUser === 'function' && getCurrentUser()) ? getCurrentUser().email : null
                 });
             }
 
             localStorage.setItem('myOrders', JSON.stringify(myOrders));
 
             // UI
+            const successList = document.getElementById('success-items-list');
+            successList.innerHTML = '';
+            if (isCartCheckout) {
+                // We cleared the cart already, but we have the items in myOrders or we can use a temp copy
+                // Let's use the matching items from myOrders for this orderId
+                myOrders.filter(o => o.id === orderId).forEach(o => {
+                    const span = document.createElement('span');
+                    span.className = 'block';
+                    span.textContent = o.gemName;
+                    successList.appendChild(span);
+                });
+            } else {
+                const gem = gems.find(g => g.id === selectedGemId);
+                successList.textContent = gem.name;
+            }
+
             document.getElementById('checkout-form').classList.add('hidden');
             document.getElementById('success-screen').classList.remove('hidden');
             document.getElementById('order-id-display').textContent = orderId;

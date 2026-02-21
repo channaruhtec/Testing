@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | Gem Cabinet</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .font-serif {
+            font-family: 'Bodoni Moda', serif;
+        }
+
+        .bg-gem-dark {
+            background-color: #030303;
+        }
+
+        .bg-gem-darker {
+            background-color: #000000;
+        }
+
+        .bg-gem-accent {
+            background-color: #0c0c0c;
+        }
+
+        .text-gem-gold {
+            color: #d4af37;
+        }
+
+        .border-gem-gold {
+            border-color: #d4af37;
+        }
+
+        .border-gem-accent {
+            border-color: #1a1a1a;
+        }
+    </style>
+</head>
+
+<body class="bg-gem-darker text-gray-300 min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-gem-darker/80 backdrop-blur-md border-b border-gem-accent py-4">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="flex flex-col items-start leading-tight">
+                <span class="text-xl font-serif font-bold tracking-[0.2em] text-white">GEM CABINET</span>
+                <span class="text-[7px] uppercase tracking-[0.4em] text-gem-gold font-medium">from the mines of
+                    gemcity</span>
+            </a>
+            <a href="index.html"
+                class="text-[10px] uppercase tracking-widest text-gray-500 hover:text-white transition-colors">Back to
+                Home</a>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex items-center justify-center p-6">
+        <div class="w-full max-w-md">
+            <div class="bg-gem-dark border border-gem-accent p-8 md:p-12 relative shadow-2xl">
+                <!-- Decorative element -->
+                <div
+                    class="absolute -top-px left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gem-gold/50 to-transparent">
+                </div>
+
+                <div id="login-container">
+                    <div class="text-center mb-10">
+                        <h1 class="text-3xl font-serif text-white mb-2">Welcome Back</h1>
+                        <p class="text-gray-500 text-sm italic">Enter your details to access your collection</p>
+                    </div>
+
+                    <form onsubmit="handleSignIn(event)" class="space-y-6">
+                        <div>
+                            <label
+                                class="block text-gray-400 text-[10px] uppercase tracking-widest mb-2 font-medium">Email
+                                Address</label>
+                            <input type="email" id="login-email" required
+                                class="w-full bg-gem-accent border border-gray-800 rounded-sm p-3 text-white focus:outline-none focus:border-gem-gold transition-colors">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-gray-400 text-[10px] uppercase tracking-widest mb-2 font-medium">Password</label>
+                            <input type="password" id="login-password" required
+                                class="w-full bg-gem-accent border border-gray-800 rounded-sm p-3 text-white focus:outline-none focus:border-gem-gold transition-colors">
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-gem-gold text-gem-darker font-bold py-4 rounded-sm hover:bg-white transition-all duration-300 uppercase tracking-widest text-xs shadow-lg shadow-gem-gold/10">
+                            Sign In
+                        </button>
+                    </form>
+
+                    <div class="mt-8 pt-8 border-t border-gray-900 text-center">
+                        <p class="text-gray-500 text-sm">New to Gem Cabinet?
+                            <button onclick="toggleAuth('signup')"
+                                class="text-gem-gold hover:text-white transition-colors font-medium">Create an
+                                Account</button>
+                        </p>
+                    </div>
+                </div>
+
+                <div id="signup-container" class="hidden">
+                    <div class="text-center mb-10">
+                        <h1 class="text-3xl font-serif text-white mb-2">Join the Cabinet</h1>
+                        <p class="text-gray-500 text-sm italic">Begin your journey into rough gem sourcing</p>
+                    </div>
+
+                    <form onsubmit="handleSignUp(event)" class="space-y-6">
+                        <div>
+                            <label
+                                class="block text-gray-400 text-[10px] uppercase tracking-widest mb-2 font-medium">Full
+                                Name</label>
+                            <input type="text" id="signup-name" required
+                                class="w-full bg-gem-accent border border-gray-800 rounded-sm p-3 text-white focus:outline-none focus:border-gem-gold transition-colors">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-gray-400 text-[10px] uppercase tracking-widest mb-2 font-medium">Email
+                                Address</label>
+                            <input type="email" id="signup-email" required
+                                class="w-full bg-gem-accent border border-gray-800 rounded-sm p-3 text-white focus:outline-none focus:border-gem-gold transition-colors">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-gray-400 text-[10px] uppercase tracking-widest mb-2 font-medium">Password</label>
+                            <input type="password" id="signup-password" required
+                                class="w-full bg-gem-accent border border-gray-800 rounded-sm p-3 text-white focus:outline-none focus:border-gem-gold transition-colors">
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-gem-gold text-gem-darker font-bold py-4 rounded-sm hover:bg-white transition-all duration-300 uppercase tracking-widest text-xs shadow-lg shadow-gem-gold/10">
+                            Create Account
+                        </button>
+                    </form>
+
+                    <div class="mt-8 pt-8 border-t border-gray-900 text-center">
+                        <p class="text-gray-500 text-sm">Already have an account?
+                            <button onclick="toggleAuth('login')"
+                                class="text-gem-gold hover:text-white transition-colors font-medium">Sign In
+                                Instead</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-8 text-center border-t border-gem-accent">
+        <p class="text-[9px] text-gray-600 uppercase tracking-[0.5em] font-medium">&copy; 2024 Gem Cabinet | Ceylon
+            Rough Sourcing</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script>
+        function toggleAuth(mode) {
+            const login = document.getElementById('login-container');
+            const signup = document.getElementById('signup-container');
+            const title = document.querySelector('title');
+
+            if (mode === 'signup') {
+                login.classList.add('hidden');
+                signup.classList.remove('hidden');
+                title.textContent = "Sign Up | Gem Cabinet";
+            } else {
+                login.classList.remove('hidden');
+                signup.classList.add('hidden');
+                title.textContent = "Sign In | Gem Cabinet";
+            }
+        }
+
+        function handleSignIn(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-password').value;
+
+            const res = signIn(email, pass);
+            if (res.success) {
+                window.location.href = 'account.html';
+            } else {
+                alert(res.message);
+            }
+        }
+
+        function handleSignUp(e) {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const pass = document.getElementById('signup-password').value;
+
+            const res = signUp(name, email, pass);
+            if (res.success) {
+                window.location.href = 'account.html';
+            } else {
+                alert(res.message);
+            }
+        }
+
+        // Check if already logged in
+        if (getCurrentUser()) {
+            window.location.href = 'account.html';
+        }
+    </script>
+</body>
+
+</html>

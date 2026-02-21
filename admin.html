@@ -338,7 +338,11 @@
 
         function initDashboard() {
             inventory = [...gems];
-            feedbackList = [...feedbacks];
+
+            // Sync Feedback: Global + Pending (LocalStorage)
+            const localFeedbacks = JSON.parse(localStorage.getItem('pendingFeedbacks') || '[]');
+            feedbackList = [...feedbacks, ...localFeedbacks];
+
             renderTable();
             renderFeedbackTable();
 
@@ -371,12 +375,21 @@
         function renderFeedbackTable() {
             const tbody = document.getElementById('feedback-table-body');
             tbody.innerHTML = '';
+
+            // Get local storage feedbacks to identify them
+            const localFeedbacks = JSON.parse(localStorage.getItem('pendingFeedbacks') || '[]');
+            const localIds = localFeedbacks.map(f => f.id);
+
             feedbackList.forEach(fb => {
+                const isPending = localIds.includes(fb.id);
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-gem-accent/50 transition-colors';
                 tr.innerHTML = `
                     <td class="p-4">
-                        <div class="font-bold text-white">${fb.name}</div>
+                        <div class="flex items-center gap-2">
+                            <div class="font-bold text-white">${fb.name}</div>
+                            ${isPending ? '<span class="bg-gem-gold/20 text-gem-gold text-[8px] uppercase px-1.5 py-0.5 rounded border border-gem-gold/30">New Entry</span>' : ''}
+                        </div>
                         <div class="text-gem-gold text-xs">${'★'.repeat(fb.rating)}</div>
                         <div class="text-gray-500 text-[10px] uppercase">${fb.date}</div>
                     </td>
@@ -513,6 +526,12 @@
         function deleteFeedback(id) {
             if (confirm('Delete this feedback?')) {
                 feedbackList = feedbackList.filter(f => f.id !== id);
+
+                // Also update local storage if it was a pending feedback
+                const localFeedbacks = JSON.parse(localStorage.getItem('pendingFeedbacks') || '[]');
+                const updatedLocal = localFeedbacks.filter(f => f.id !== id);
+                localStorage.setItem('pendingFeedbacks', JSON.stringify(updatedLocal));
+
                 renderFeedbackTable();
                 showToast('Feedback Deleted');
             }
